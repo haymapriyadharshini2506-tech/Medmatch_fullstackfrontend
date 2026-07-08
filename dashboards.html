@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MedMatch Dashboard</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:aliceblue;
+}
+
+.header{
+    background:rgb(137, 178, 209);
+    color:rgb(26, 26, 123);
+    padding:20px 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.header h1{
+    color:rgb(26, 26, 123);
+    margin:0;
+    font-size:30px;
+}
+
+.header-right{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+.logoutbt{
+    padding:10px 18px;
+    background:rgb(26, 26, 123);
+    color:white;
+    border:none;
+    cursor:pointer;
+    border-radius:5px;
+    font-weight:bold;
+    font-size:14px;
+}
+
+.logoutbt:hover{
+    background:rgb(13, 13, 85);
+}
+
+.container{
+    width:90%;
+    margin:50px auto;
+}
+
+.container h2{
+    margin-bottom:30px;
+    color:rgb(26, 26, 123);
+    font-size:22px;
+}
+
+.dashboard{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:30px;
+}
+
+.card{
+    background:white;
+    height:180px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    font-size:22px;
+    font-weight:bold;
+    border-radius:12px;
+    cursor:pointer;
+    transition:0.3s;
+    box-shadow:0 4px 16px rgba(0,0,0,0.12);
+    color:rgb(26, 26, 123);
+    border-top:4px solid rgb(137, 178, 209);
+}
+
+.card:hover{
+    background:rgb(26, 26, 123);
+    color:white;
+    transform:scale(1.05);
+    border-top:4px solid white;
+}
+
+.card .icon{
+    font-size:36px;
+}
+
+@media(max-width:900px){
+
+.dashboard{
+grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+@media(max-width:600px){
+
+.dashboard{
+grid-template-columns:1fr;
+}
+
+}
+
+
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+<h1>&#x1F3E5; MedMatch Dashboard</h1>
+<div class="header-right">
+    <button class="logoutbt" onclick="logout()">Logout</button>
+</div>
+</div>
+
+<div class="container">
+
+<h2>&#x1F4CA; Select a Module</h2>
+
+<div class="dashboard">
+
+<div class="card" onclick="openDashboard('users.html')">
+<span class="icon">&#x1F3E5;</span>
+Users
+</div>
+
+<div class="card" onclick="openDashboard('medicines.html')">
+<span class="icon">&#x1F48A;</span>
+Medicines
+</div>
+
+<div class="card" onclick="openDashboard('pharmacies.html')">
+<span class="icon">&#x1F3EA;</span>
+Pharmacies
+</div>
+
+<div class="card" onclick="openDashboard('favorites.html')">
+<span class="icon">&#x2764;&#xFE0F;</span>
+Favorites
+</div>
+
+<div class="card" onclick="openDashboard('interactions.html')">
+<span class="icon">&#x26A0;&#xFE0F;</span>
+Interactions
+</div>
+
+<div class="card" onclick="openDashboard('prescriptions.html')">
+<span class="icon">&#x1F4CB;</span>
+Prescriptions
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function openDashboard(page){
+
+    window.location.href=page;
+
+}
+
+function logout(){
+
+    localStorage.clear();
+    window.location.href="index.html";
+
+}
+
+</script>
+
+</body>
+</html>

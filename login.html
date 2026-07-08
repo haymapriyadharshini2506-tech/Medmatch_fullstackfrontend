@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+
+<table align="center">
+    <tr>
+        <td align="center">
+
+            <h1>Login Form</h1>
+
+            <form id="login-form">
+
+                <input
+                    type="email"
+                    id="login-email"
+                    placeholder="Email ID"
+                    required
+                >
+                <br><br>
+
+                <input
+                    type="password"
+                    id="login-password"
+                    placeholder="Password"
+                    required
+                >
+                <br><br>
+
+                <div id="login-error"
+                     style="color:red;display:none;margin-bottom:10px;">
+                </div>
+
+                <button type="submit" id="login-btn">
+                    Login
+                </button>
+
+                <br><br>
+
+                <a href="register.html">
+                    Don't have an account? Register Here
+                </a>
+
+            </form>
+
+        </td>
+    </tr>
+</table>
+
+<script>
+
+const API_BASE = "https://medmatch-fullstackbackend.onrender.com";
+
+document.getElementById("login-form").addEventListener("submit", async function(e){
+
+    e.preventDefault();
+
+    const email = document.getElementById("login-email").value.trim();
+    const password = document.getElementById("login-password").value;
+
+    const errDiv = document.getElementById("login-error");
+    const btn = document.getElementById("login-btn");
+
+    errDiv.style.display = "none";
+
+    if(!email || !password){
+
+        errDiv.textContent = "Please enter email and password.";
+        errDiv.style.display = "block";
+        return;
+    }
+
+    btn.textContent = "Logging in...";
+    btn.disabled = true;
+
+    try{
+
+        const res = await fetch(API_BASE + "/Medmatch/auth/login",{
+
+            method:"POST",
+
+            headers:{
+                "Content-Type":"application/json"
+            },
+
+            body:JSON.stringify({
+                email:email,
+                password:password
+            })
+
+        });
+
+        if(res.ok){
+
+            const data = await res.json();
+
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("role", data.role);
+
+            alert("Login Successful");
+            window.location.href="../managedashboards/dashboards.html"
+
+        // if(data.role === "ADMIN"){
+          //      window.location.href = "dashboard.html";
+         //   }
+          //  else if(data.role === "PATIENT"){
+           //     window.location.href = "dashboard.html";
+            //}  
+
+        }else{
+
+            const data = await res.json().catch(() => ({}));
+
+            errDiv.textContent =
+                data.message || "Invalid email or password.";
+
+            errDiv.style.display = "block";
+        }
+
+    }catch(error){
+
+        errDiv.textContent =
+            "Cannot connect to server. Make sure backend is running.";
+
+        errDiv.style.display = "block";
+    }
+
+    finally{
+
+        btn.textContent = "Login";
+        btn.disabled = false;
+    }
+
+});
+
+</script>
+
+</body>
+</html>

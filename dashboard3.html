@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pharmacy Dashboard</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f5f5f5;
+}
+
+.head{
+    background:rgb(137, 178, 209);
+    color:rgb(26, 26, 123);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px;
+}
+
+.head h2{
+    color:rgb(26, 26, 123);
+    margin:0;
+    font-size:26px;
+}
+
+.head-right{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+.backbt{
+    padding:10px 16px;
+    background:white;
+    color:rgb(26, 26, 123);
+    border:2px solid rgb(26, 26, 123);
+    cursor:pointer;
+    border-radius:5px;
+    font-weight:bold;
+    text-decoration:none;
+    font-size:14px;
+}
+
+.logoutbt{
+    padding:10px 16px;
+    background:rgb(26, 26, 123);
+    color:white;
+    border:none;
+    cursor:pointer;
+    border-radius:5px;
+    font-weight:bold;
+    font-size:14px;
+}
+
+.logoutbt:hover{
+    background:rgb(13, 13, 85);
+}
+
+.operations{
+    width:90%;
+    margin:20px auto;
+    background:white;
+    padding:20px;
+    border-radius:8px;
+}
+
+.bt {
+    padding: 12px 20px;
+    margin: 5px;
+    background: white;
+    color: rgb(26, 26, 123);
+    border: 2px solid rgb(137, 178, 209);
+    cursor: pointer;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.bt:hover {
+    background: rgb(26, 26, 123);
+    color: white;
+    border-color: rgb(26, 26, 123);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(26, 26, 123, 0.15);
+}
+
+.bt:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(26, 26, 123, 0.05);
+}
+
+.section{
+    display:none;
+    margin-top:20px;
+}
+
+.section input{
+    width:320px;
+    padding: 10px 14px;
+    margin: 8px 5px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.section input:focus {
+    border-color: rgb(26, 26, 123);
+    box-shadow: 0 0 0 3px rgba(26, 26, 123, 0.15);
+}
+
+.actionBtn {
+    padding: 12px 24px;
+    background: #10b981;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.25);
+    margin-top: 10px;
+}
+
+.actionBtn:hover {
+    background: #059669;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(16, 185, 129, 0.4);
+}
+
+.actionBtn:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.25);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+table,th,td{
+    border:1px solid gray;
+}
+
+th,td{
+    padding:10px;
+    text-align:left;
+}
+
+#message{
+    margin-top:20px;
+    font-weight:bold;
+    color:green;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="head">
+    <h2>&#x1F3EA; Pharmacy Dashboard</h2>
+    <div class="head-right">
+        <a class="backbt" href="dashboards.html">&#8592; Back</a>
+        <button class="logoutbt" onclick="logout()">Logout</button>
+    </div>
+</div>
+
+<div class="operations">
+
+<h2>Pharmacy Operations</h2>
+
+<button class="bt" onclick="showSection('add')">Add Pharmacy</button>
+<button class="bt" onclick="showSection('get')">Get Pharmacy By ID</button>
+<button class="bt" onclick="showSection('getall')">Get Pharmacies</button>
+<button class="bt" onclick="showSection('edit')">Edit Pharmacy</button>
+<button class="bt" onclick="showSection('delete')">Delete Pharmacy</button>
+
+<!-- Add Pharmacy -->
+
+<div id="add" class="section">
+
+<h3>Add Pharmacy</h3>
+
+<input type="text" id="name" placeholder="Pharmacy Name"><br>
+<input type="text" id="address" placeholder="Address"><br>
+<input type="text" id="city" placeholder="City"><br>
+<input type="text" id="pincode" placeholder="Pincode"><br>
+<input type="text" id="phone" placeholder="Phone Number"><br>
+<input type="number" step="any" id="latitude" placeholder="Latitude"><br>
+<input type="number" step="any" id="longitude" placeholder="Longitude"><br>
+<input type="text" id="openingHours" placeholder="Opening Hours"><br>
+
+<button class="actionBtn" onclick="addPharmacy()">Add Pharmacy</button>
+
+</div>
+
+<!-- Get Pharmacy -->
+
+<div id="get" class="section">
+
+<h3>Get Pharmacy By ID</h3>
+
+<input type="number" id="getPharmacyId" placeholder="Pharmacy ID"><br>
+
+<button class="actionBtn" onclick="getPharmacyById()">Get Pharmacy</button>
+
+<br><br>
+
+<div id="pharmacyDetails"></div>
+
+</div>
+
+<!-- Get All Pharmacies -->
+
+<div id="getall" class="section">
+
+<h3>Pharmacies</h3>
+
+<table>
+
+<thead>
+
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>Address</th>
+<th>City</th>
+<th>Pincode</th>
+<th>Phone</th>
+<th>Latitude</th>
+<th>Longitude</th>
+<th>Opening Hours</th>
+</tr>
+
+</thead>
+
+<tbody id="pharmacyBody">
+
+</tbody>
+
+</table>
+
+</div>
+
+<!-- Edit Pharmacy -->
+
+<div id="edit" class="section">
+
+<h3>Edit Pharmacy</h3>
+
+<input type="number" id="editId" placeholder="Pharmacy ID"><br>
+<input type="text" id="editName" placeholder="New Pharmacy Name"><br>
+<input type="text" id="editAddress" placeholder="New Address"><br>
+<input type="text" id="editCity" placeholder="New City"><br>
+<input type="text" id="editPincode" placeholder="New Pincode"><br>
+<input type="text" id="editPhone" placeholder="New Phone Number"><br>
+<input type="number" step="any" id="editLatitude" placeholder="New Latitude"><br>
+<input type="number" step="any" id="editLongitude" placeholder="New Longitude"><br>
+<input type="text" id="editOpeningHours" placeholder="New Opening Hours"><br>
+
+<button class="actionBtn" onclick="editPharmacy()">Update Pharmacy</button>
+
+</div>
+
+<!-- Delete Pharmacy -->
+
+<div id="delete" class="section">
+
+<h3>Delete Pharmacy</h3>
+
+<input type="number" id="deleteId" placeholder="Pharmacy ID"><br>
+
+<button class="actionBtn" onclick="deletePharmacy()">Delete Pharmacy</button>
+
+</div>
+
+<h3 id="message"></h3>
+
+<script>
+
+const BASEURL="https://medmatch-fullstackbackend.onrender.com";
+const token=localStorage.getItem("token");
+
+function showSection(id){
+
+document.getElementById("message").innerHTML="";
+document.getElementById("pharmacyDetails").innerHTML="";
+document.getElementById("pharmacyBody").innerHTML="";
+
+document.getElementById("add").style.display="none";
+document.getElementById("get").style.display="none";
+document.getElementById("getall").style.display="none";
+document.getElementById("edit").style.display="none";
+document.getElementById("delete").style.display="none";
+
+document.getElementById(id).style.display="block";
+
+if(id=="getall"){
+getAllPharmacies();
+}
+
+}
+
+function logout(){
+
+localStorage.clear();
+window.location.href="index.html";
+
+}
+
+async function addPharmacy(){
+
+    let name=document.getElementById("name").value;
+    let address=document.getElementById("address").value;
+    let city=document.getElementById("city").value;
+    let pincode=document.getElementById("pincode").value;
+    let phone=document.getElementById("phone").value;
+    let latitude=document.getElementById("latitude").value;
+    let longitude=document.getElementById("longitude").value;
+    let openingHours=document.getElementById("openingHours").value;
+
+    if(name==="" || address==="" || city==="" || latitude==="" || longitude===""){
+        alert("Please fill in required fields (Name, Address, City, Latitude, Longitude)");
+        return;
+    }
+
+    try{
+
+        const response=await fetch(BASEURL+"/postphar",{
+
+            method:"POST",
+
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization":"Bearer "+token
+            },
+
+            body:JSON.stringify({
+                name:name,
+                address:address,
+                city:city,
+                pincode:pincode,
+                phone:phone,
+                latitude:parseFloat(latitude),
+                longitude:parseFloat(longitude),
+                openingHours:openingHours
+            })
+
+        });
+
+        if(response.ok){
+
+            document.getElementById("message").style.color="green";
+            document.getElementById("message").innerHTML="Pharmacy Added Successfully";
+
+            document.getElementById("name").value="";
+            document.getElementById("address").value="";
+            document.getElementById("city").value="";
+            document.getElementById("pincode").value="";
+            document.getElementById("phone").value="";
+            document.getElementById("latitude").value="";
+            document.getElementById("longitude").value="";
+            document.getElementById("openingHours").value="";
+
+        }else{
+
+            document.getElementById("message").style.color="red";
+            document.getElementById("message").innerHTML="Failed to Add Pharmacy";
+
+        }
+
+    }catch(error){
+
+        document.getElementById("message").style.color="red";
+        document.getElementById("message").innerHTML="Server Error";
+
+    }
+
+}
+
+async function getAllPharmacies(){
+
+    try{
+
+        const response=await fetch(BASEURL+"/getphar",{
+
+            method:"GET",
+
+            headers:{
+                "Authorization":"Bearer "+token
+            }
+
+        });
+
+        if(response.ok){
+
+            const pharmacies=await response.json();
+
+            let rows="";
+
+            pharmacies.forEach(phar=>{
+
+                rows+=`
+                <tr>
+                    <td>${phar.id}</td>
+                    <td>${phar.name}</td>
+                    <td>${phar.address}</td>
+                    <td>${phar.city}</td>
+                    <td>${phar.pincode}</td>
+                    <td>${phar.phone}</td>
+                    <td>${phar.latitude}</td>
+                    <td>${phar.longitude}</td>
+                    <td>${phar.openingHours}</td>
+                </tr>`;
+
+            });
+
+            document.getElementById("pharmacyBody").innerHTML=rows;
+
+        }else{
+
+            document.getElementById("message").style.color="red";
+            document.getElementById("message").innerHTML="Failed to Fetch Pharmacies";
+
+        }
+
+    }catch(error){
+
+        document.getElementById("message").style.color="red";
+        document.getElementById("message").innerHTML="Server Error";
+
+    }
+
+}
+
+async function getPharmacyById(){
+
+    let id=document.getElementById("getPharmacyId").value;
+
+    if(id===""){
+        alert("Enter Pharmacy ID");
+        return;
+    }
+
+    try{
+
+        const response=await fetch(BASEURL+"/getphar/"+id,{
+
+            method:"GET",
+
+            headers:{
+                "Authorization":"Bearer "+token
+            }
+
+        });
+
+        if(response.ok){
+
+            const phar=await response.json();
+
+            document.getElementById("pharmacyDetails").innerHTML=`
+                <p><b>ID:</b> ${phar.id}</p>
+                <p><b>Name:</b> ${phar.name}</p>
+                <p><b>Address:</b> ${phar.address}</p>
+                <p><b>City:</b> ${phar.city}</p>
+                <p><b>Pincode:</b> ${phar.pincode}</p>
+                <p><b>Phone:</b> ${phar.phone}</p>
+                <p><b>Latitude:</b> ${phar.latitude}</p>
+                <p><b>Longitude:</b> ${phar.longitude}</p>
+                <p><b>Opening Hours:</b> ${phar.openingHours}</p>
+            `;
+
+        }else{
+
+            document.getElementById("pharmacyDetails").innerHTML="Pharmacy Not Found";
+
+        }
+
+    }catch(error){
+
+        document.getElementById("pharmacyDetails").innerHTML="Server Error";
+
+    }
+
+}
+
+async function editPharmacy(){
+
+    let id=document.getElementById("editId").value;
+    let name=document.getElementById("editName").value;
+    let address=document.getElementById("editAddress").value;
+    let city=document.getElementById("editCity").value;
+    let pincode=document.getElementById("editPincode").value;
+    let phone=document.getElementById("editPhone").value;
+    let latitude=document.getElementById("editLatitude").value;
+    let longitude=document.getElementById("editLongitude").value;
+    let openingHours=document.getElementById("editOpeningHours").value;
+
+    if(id===""){
+        alert("Enter Pharmacy ID");
+        return;
+    }
+
+    try{
+
+        const response=await fetch(BASEURL+"/putphar/"+id,{
+
+            method:"PUT",
+
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization":"Bearer "+token
+            },
+
+            body:JSON.stringify({
+                name:name,
+                address:address,
+                city:city,
+                pincode:pincode,
+                phone:phone,
+                latitude:latitude ? parseFloat(latitude) : null,
+                longitude:longitude ? parseFloat(longitude) : null,
+                openingHours:openingHours
+            })
+
+        });
+
+        if(response.ok){
+
+            document.getElementById("message").style.color="green";
+            document.getElementById("message").innerHTML="Pharmacy Updated Successfully";
+
+            document.getElementById("editId").value="";
+            document.getElementById("editName").value="";
+            document.getElementById("editAddress").value="";
+            document.getElementById("editCity").value="";
+            document.getElementById("editPincode").value="";
+            document.getElementById("editPhone").value="";
+            document.getElementById("editLatitude").value="";
+            document.getElementById("editLongitude").value="";
+            document.getElementById("editOpeningHours").value="";
+
+        }else{
+
+            document.getElementById("message").style.color="red";
+            document.getElementById("message").innerHTML="Failed to Update Pharmacy";
+
+        }
+
+    }catch(error){
+
+        document.getElementById("message").style.color="red";
+        document.getElementById("message").innerHTML="Server Error";
+
+    }
+
+}
+
+async function deletePharmacy(){
+
+    let id=document.getElementById("deleteId").value;
+
+    if(id===""){
+        alert("Enter Pharmacy ID");
+        return;
+    }
+
+    try{
+
+        const response=await fetch(BASEURL+"/deletephar/"+id,{
+
+            method:"DELETE",
+
+            headers:{
+                "Authorization":"Bearer "+token
+            }
+
+        });
+
+        if(response.ok){
+
+            document.getElementById("message").style.color="green";
+            document.getElementById("message").innerHTML="Pharmacy Deleted Successfully";
+
+            document.getElementById("deleteId").value="";
+
+        }else{
+
+            document.getElementById("message").style.color="red";
+            document.getElementById("message").innerHTML="Failed to Delete Pharmacy";
+
+        }
+
+    }catch(error){
+
+        document.getElementById("message").style.color="red";
+        document.getElementById("message").innerHTML="Server Error";
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>

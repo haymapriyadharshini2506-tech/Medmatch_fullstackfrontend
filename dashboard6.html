@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prescription Dashboard</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f5f5f5;
+}
+
+.head{
+    background:rgb(137, 178, 209);
+    color:rgb(26, 26, 123);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px;
+}
+
+.head h2{
+    color:rgb(26, 26, 123);
+    margin:0;
+    font-size:26px;
+}
+
+.head-right{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+.backbt{
+    padding:10px 16px;
+    background:white;
+    color:rgb(26, 26, 123);
+    border:2px solid rgb(26, 26, 123);
+    cursor:pointer;
+    border-radius:5px;
+    font-weight:bold;
+    text-decoration:none;
+    font-size:14px;
+}
+
+.logoutbt{
+    padding:10px 16px;
+    background:rgb(26, 26, 123);
+    color:white;
+    border:none;
+    cursor:pointer;
+    border-radius:5px;
+    font-weight:bold;
+    font-size:14px;
+}
+
+.logoutbt:hover{
+    background:rgb(13, 13, 85);
+}
+
+.operations{
+    width:90%;
+    margin:20px auto;
+    background:white;
+    padding:20px;
+    border-radius:8px;
+}
+
+.bt {
+    padding: 12px 20px;
+    margin: 5px;
+    background: white;
+    color: rgb(26, 26, 123);
+    border: 2px solid rgb(137, 178, 209);
+    cursor: pointer;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.bt:hover {
+    background: rgb(26, 26, 123);
+    color: white;
+    border-color: rgb(26, 26, 123);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(26, 26, 123, 0.15);
+}
+
+.bt:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(26, 26, 123, 0.05);
+}
+
+.section{
+    display:none;
+    margin-top:20px;
+}
+
+.section input{
+    width:320px;
+    padding: 10px 14px;
+    margin: 8px 5px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.section input:focus {
+    border-color: rgb(26, 26, 123);
+    box-shadow: 0 0 0 3px rgba(26, 26, 123, 0.15);
+}
+
+.actionBtn {
+    padding: 12px 24px;
+    background: #10b981;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.25);
+    margin-top: 10px;
+}
+
+.actionBtn:hover {
+    background: #059669;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(16, 185, 129, 0.4);
+}
+
+.actionBtn:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.25);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+table,th,td{
+    border:1px solid gray;
+}
+
+th,td{
+    padding:10px;
+    text-align:left;
+}
+
+#message{
+    margin-top:20px;
+    font-weight:bold;
+    color:green;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="head">
+    <h2>&#x1F4CB; Prescription Dashboard</h2>
+    <div class="head-right">
+        <a class="backbt" href="dashboards.html">&#8592; Back</a>
+        <button class="logoutbt" onclick="logout()">Logout</button>
+    </div>
+</div>
+
+<div class="operations">
+
+<h2>Prescription Operations</h2>
+
+<button class="bt" onclick="showSection('add')">Add Prescription</button>
+<button class="bt" onclick="showSection('get')">Get Prescription By ID</button>
+<button class="bt" onclick="showSection('getall')">Get Prescriptions</button>
+<button class="bt" onclick="showSection('edit')">Edit Prescription</button>
+<button class="bt" onclick="showSection('delete')">Delete Prescription</button>
+
+<!-- Add Prescription -->
+
+<div id="add" class="section">
+
+<h3>Add Prescription</h3>
+
+<input type="text" id="fileurl" placeholder="File URL"><br>
+<input type="text" id="uploaddate" placeholder="Upload Date (e.g., YYYY-MM-DD)"><br>
+<input type="text" id="notes" placeholder="Notes"><br>
+<input type="text" id="user" placeholder="User (Username)"><br>
+
+<button class="actionBtn" onclick="addPrescription()">Add Prescription</button>
+
+</div>
+
+<!-- Get Prescription -->
+
+<div id="get" class="section">
+
+<h3>Get Prescription By ID</h3>
+
+<input type="number" id="getPrescriptionId" placeholder="Prescription ID"><br>
+
+<button class="actionBtn" onclick="getPrescriptionById()">Get Prescription</button>
+
+<br><br>
+
+<div id="prescriptionDetails"></div>
+
+</div>
+
+<!-- Get All Prescriptions -->
+
+<div id="getall" class="section">
+
+<h3>Prescriptions</h3>
+
+<table>
+
+<thead>
+
+<tr>
+<th>ID</th>
+<th>File URL</th>
+<th>Upload Date</th>
+<th>Notes</th>
+<th>User (Username)</th>
+</tr>
+
+</thead>
+
+<tbody id="prescriptionBody">
+
+</tbody>
+
+</table>
+
+</div>
+
+<!-- Edit Prescription -->
+
+<div id="edit" class="section">
+
+<h3>Edit Prescription</h3>
+
+<input type="number" id="editId" placeholder="Prescription ID"><br>
+<input type="text" id="editFileurl" placeholder="New File URL"><br>
+<input type="text" id="editUploaddate" placeholder="New Upload Date (e.g., YYYY-MM-DD)"><br>
+<input type="text" id="editNotes" placeholder="New Notes"><br>
+<input type="text" id="editUser" placeholder="New User (Username)"><br>
+
+<button class="actionBtn" onclick="editPrescription()">Update Prescription</button>
+
+</div>
+
+<!-- Delete Prescription -->
+
+<div id="delete" class="section">
+
+<h3>Delete Prescription</h3>
+
+<input type="number" id="deleteId" placeholder="Prescription ID"><br>
+
+<button class="actionBtn" onclick="deletePrescription()">Delete Prescription</button>
+
+</div>
+
+<h3 id="message"></h3>
+
+<script>
+
+const BASEURL="https://medmatch-fullstackbackend.onrender.com";
+const token=localStorage.getItem("token");
+
+function showSection(id){
+
+document.getElementById("message").innerHTML="";
+document.getElementById("prescriptionDetails").innerHTML="";
+document.getElementById("prescriptionBody").innerHTML="";
+
+document.getElementById("add").style.display="none";
+document.getElementById("get").style.display="none";
+document.getElementById("getall").style.display="none";
+document.getElementById("edit").style.display="none";
+document.getElementById("delete").style.display="none";
+
+document.getElementById(id).style.display="block";
+
+if(id=="getall"){
+getAllPrescriptions();
+}
+
+}
+
+function logout(){
+
+localStorage.clear();
+window.location.href="index.html";
+
+}
+
+async function addPrescription(){
+
+    let fileurl=document.getElementById("fileurl").value;
+    let uploaddate=document.getElementById("uploaddate").value;
+    let notes=document.getElementById("notes").value;
+    let user=document.getElementById("user").value;
+
+    if(fileurl==="" || uploaddate==="" || notes==="" || user===""){
+        alert("Please fill in all fields");
+        return;
+    }
+
+    try{
+
+        const response=await fetch(BASEURL+"/postpres",{
+
+            method:"POST",
+
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization":"Bearer "+token
+            },
+
+            body:JSON.stringify({
+                fileurl:fileurl,
+                uploaddate:uploaddate,
+                notes:notes,
+                user:user
+            })
+
+        });
+
+        if(response.ok){
+
+            document.getElementById("message").style.color="green";
+            document.getElementById("message").innerHTML="Prescription Added Successfully";
+
+            document.getElementById("fileurl").value="";
+            document.getElementById("uploaddate").value="";
+            document.getElementById("notes").value="";
+            document.getElementById("user").value="";
+
+        }else{
+
+            document.getElementById("message").style.color="red";
+            document.getElementById("message").innerHTML="Failed to Add Prescription";
+
+        }
+
+    }catch(error){
+
+        document.getElementById("message").style.color="red";
+        document.getElementById("message").innerHTML="Server Error";
+
+    }
+
+}
+
+async function getAllPrescriptions(){
+
+    try{
+
+        const response=await fetch(BASEURL+"/getpres",{
+
+            method:"GET",
+
+            headers:{
+                "Authorization":"Bearer "+token
+            }
+
+        });
+
+        if(response.ok){
+
+            const prescriptions=await response.json();
+
+            let rows="";
+
+            prescriptions.forEach(pres=>{
+
+                rows+=`
+                <tr>
+                    <td>${pres.id}</td>
+                    <td>${pres.fileurl}</td>
+                    <td>${pres.uploaddate}</td>
+                    <td>${pres.notes}</td>
+                    <td>${pres.user}</td>
+                </tr>`;
+
+            });
+
+            document.getElementById("prescriptionBody").innerHTML=rows;
+
+        }else{
+
+            document.getElementById("message").style.color="red";
+            document.getElementById("message").innerHTML="Failed to Fetch Prescriptions";
+
+        }
+
+    }catch(error){
+
+        document.getElementById("message").style.color="red";
+        document.getElementById("message").innerHTML="Server Error";
+
+    }
+
+}
+
+async function getPrescriptionById(){
+
+    let id=document.getElementById("getPrescriptionId").value;
+
+    if(id===""){
+        alert("Enter Prescription ID");
+        return;
+    }
+
+    try{
+
+        const response=await fetch(BASEURL+"/getpres/"+id,{
+
+            method:"GET",
+
+            headers:{
+                "Authorization":"Bearer "+token
+            }
+
+        });
+
+        if(response.ok){
+
+            const pres=await response.json();
+
+            document.getElementById("prescriptionDetails").innerHTML=`
+                <p><b>ID:</b> ${pres.id}</p>
+                <p><b>File URL:</b> ${pres.fileurl}</p>
+                <p><b>Upload Date:</b> ${pres.uploaddate}</p>
+                <p><b>Notes:</b> ${pres.notes}</p>
+                <p><b>User (Username):</b> ${pres.user}</p>
+            `;
+
+        }else{
+
+            document.getElementById("prescriptionDetails").innerHTML="Prescription Not Found";
+
+        }
+
+    }catch(error){
+
+        document.getElementById("prescriptionDetails").innerHTML="Server Error";
+
+    }
+
+}
+
+async function editPrescription(){
+
+    let id=document.getElementById("editId").value;
+    let fileurl=document.getElementById("editFileurl").value;
+    let uploaddate=document.getElementById("editUploaddate").value;
+    let notes=document.getElementById("editNotes").value;
+    let user=document.getElementById("editUser").value;
+
+    if(id===""){
+        alert("Enter Prescription ID");
+        return;
+    }
+
+    try{
+
+        const response=await fetch(BASEURL+"/putpres/"+id,{
+
+            method:"PUT",
+
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization":"Bearer "+token
+            },
+
+            body:JSON.stringify({
+                fileurl:fileurl,
+                uploaddate:uploaddate,
+                notes:notes,
+                user:user
+            })
+
+        });
+
+        if(response.ok){
+
+            document.getElementById("message").style.color="green";
+            document.getElementById("message").innerHTML="Prescription Updated Successfully";
+
+            document.getElementById("editId").value="";
+            document.getElementById("editFileurl").value="";
+            document.getElementById("editUploaddate").value="";
+            document.getElementById("editNotes").value="";
+            document.getElementById("editUser").value="";
+
+        }else{
+
+            document.getElementById("message").style.color="red";
+            document.getElementById("message").innerHTML="Failed to Update Prescription";
+
+        }
+
+    }catch(error){
+
+        document.getElementById("message").style.color="red";
+        document.getElementById("message").innerHTML="Server Error";
+
+    }
+
+}
+
+async function deletePrescription(){
+
+    let id=document.getElementById("deleteId").value;
+
+    if(id===""){
+        alert("Enter Prescription ID");
+        return;
+    }
+
+    try{
+
+        const response=await fetch(BASEURL+"/deletepres/"+id,{
+
+            method:"DELETE",
+
+            headers:{
+                "Authorization":"Bearer "+token
+            }
+
+        });
+
+        if(response.ok){
+
+            document.getElementById("message").style.color="green";
+            document.getElementById("message").innerHTML="Prescription Deleted Successfully";
+
+            document.getElementById("deleteId").value="";
+
+        }else{
+
+            document.getElementById("message").style.color="red";
+            document.getElementById("message").innerHTML="Failed to Delete Prescription";
+
+        }
+
+    }catch(error){
+
+        document.getElementById("message").style.color="red";
+        document.getElementById("message").innerHTML="Server Error";
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>

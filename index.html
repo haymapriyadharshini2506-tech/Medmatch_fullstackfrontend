@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+    <head>
+        <title>TASK</title>
+    </head>
+    <style>
+        *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background-color:aliceblue;
+    font-family:Arial, Helvetica, sans-serif;
+}
+        
+        .nav{
+    background-color: rgb(137, 178, 209);
+    height:120px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    
+}
+
+.nav img{
+    width:220px;
+    height:120px;
+    background:transparent;
+}
+
+.nav h1{
+    background:transparent;
+    color:rgb(26, 26, 123);
+    font-size:36px;
+    margin:0;
+    flex:1;
+    text-align:center;
+}
+        p{
+            font-size:17px;
+        }
+        .container{
+
+            display:flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top:0.5%;
+        }
+        .content{
+            width:50%;
+        }
+        .image{
+            width:50%;
+            text-align:center;
+        }
+        .image img{
+            width:100%;
+            max-width: 700px;
+            height:auto;
+        }
+        .foot{
+            display: flex;
+            justify-content:center;
+            align-items: center;
+        }
+        nav{
+            display:flex;
+            gap:50px;
+        }
+        nav a{
+            text-decoration: none;
+            font-family: 20px;
+            color:blue;
+        }
+        section{
+    padding:50px;
+}
+
+section h2{
+    text-align:center;
+    color:darkblue;
+    margin-bottom:30px;
+}
+
+.cards{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:25px;
+}
+
+.card{
+    width:260px;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.15);
+    text-align:center;
+}
+
+.card h3{
+    background:white;
+    color:darkblue;
+}
+
+.card p{
+    background:white;
+}
+
+.work ol{
+    width:70%;
+    margin:auto;
+    line-height:35px;
+    font-size:18px;
+}
+
+.benefits{
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    flex-wrap:wrap;
+}
+
+.benefit{
+    width:250px;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 8px gray;
+    text-align:center;
+}
+
+.benefit h3{
+    background:white;
+}
+
+.benefit p{
+    background:white;
+}
+
+.stats{
+    display:flex;
+    justify-content:space-evenly;
+    flex-wrap:wrap;
+}
+
+.stat{
+    text-align:center;
+}
+
+.stat h1{
+    color:blue;
+    font-size:45px;
+    margin-bottom:5px;
+}
+
+.testimonials{
+    display:flex;
+    justify-content:center;
+    gap:25px;
+    flex-wrap:wrap;
+}
+
+.review{
+    width:320px;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 8px gray;
+}
+
+.review p,
+.review h4{
+    background:white;
+}
+
+.faq details{
+    width:80%;
+    margin:15px auto;
+    background:white;
+    padding:15px;
+    border-radius:8px;
+    box-shadow:0 0 5px gray;
+}
+
+.faq summary{
+    background:white;
+    font-size:18px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.contact{
+    text-align:center;
+    line-height:35px;
+    font-size:18px;
+}
+.work{
+    padding:60px 10%;
+}
+
+.work h2{
+    text-align:center;
+    color:#003399;
+    margin-bottom:60px;
+}
+
+.process{
+    position:relative;
+}
+
+.step{
+    display:flex;
+    align-items:center;
+    width:100%;
+    margin:45px 0;
+}
+
+.step.left{
+    justify-content:flex-start;
+}
+
+.step.right{
+    justify-content:flex-end;
+}
+
+.number{
+    width:70px;
+    height:70px;
+    background:#1976d2;
+    color:white;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:28px;
+    font-weight:bold;
+    box-shadow:0 5px 10px rgba(0,0,0,.2);
+}
+
+.text{
+    width:42%;
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 5px 15px rgba(0,0,0,.15);
+}
+
+.left .number{
+    margin-right:25px;
+}
+
+.right .number{
+    order:2;
+    margin-left:25px;
+}
+
+.text h3{
+    margin:0 0 10px;
+    color:#1565c0;
+    background:white;
+}
+
+.text p{
+    margin:0;
+    background:white;
+    color:#555;
+    line-height:1.6;
+}
+
+.step:hover .text{
+    transform:translateY(-5px);
+    transition:0.3s;
+}
+
+@media(max-width:768px){
+
+.step,
+.step.left,
+.step.right{
+    justify-content:flex-start;
+}
+
+.text{
+    width:75%;
+}
+
+.right .number{
+    order:0;
+    margin-left:0;
+    margin-right:25px;
+}
+
+}
+footer{
+    background:#0f3b63;
+    color:white;
+    padding:50px 8% 20px;
+}
+
+.footer{
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:40px;
+    background:transparent;
+}
+
+.footer-column{
+    flex:1;
+    min-width:220px;
+    background:transparent;
+}
+
+.footer-column h2,
+.footer-column h3{
+    color:#8fd3ff;
+    margin-bottom:20px;
+    background:transparent;
+}
+
+.footer-column p{
+    color:#e4e4e4;
+    line-height:28px;
+    background:transparent;
+}
+
+.footer-column a{
+    display:block;
+    color:#e4e4e4;
+    text-decoration:none;
+    margin:10px 0;
+    background:transparent;
+}
+
+.footer-column a:hover{
+    color:#6ec6ff;
+    padding-left:8px;
+}
+
+footer hr{
+    border:1px solid rgba(255,255,255,.2);
+    margin:35px 0 20px;
+}
+
+.footer-bottom{
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    background:transparent;
+}
+
+.footer-bottom p{
+    color:#cfcfcf;
+    background:transparent;
+}
+.menu{
+    background:#0f3b63;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:50px;
+    padding:15px 0;
+}
+
+.menu a{
+    color:white;
+    text-decoration:none;
+    font-size:18px;
+    font-weight:bold;
+    padding:10px 18px;
+    border-radius:5px;
+    transition:.3s;
+    background:transparent;
+}
+
+.menu a:hover{
+    background:white;
+    color:#0f3b63;
+}
+.hero{
+    background-image: linear-gradient(rgba(15,59,99,0.7), rgba(15,59,99,0.7)),
+    url("C:\Users\Hp\Downloads\bg.png");
+    background-size:cover;
+    background-position:center;
+    height:450px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    text-align:center;
+}
+
+    
+    </style>
+    <body>
+        <div class="nav"> 
+             <!---   <a href="index.html">home</a>
+                <a href="register.html">register</a>
+                <a href="login.html">login</a> --->
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXVIQNVvj6GVqJ8I5bzWyebfq-hmKuCfrU_c2GCOILUQ&s=10">
+<h1>MedMatch-Drug Interaction & Pharmacy Locator</h1>
+        </div> 
+        <div class="menu">
+
+    <a href="index.html">Home</a>
+    <a href="register.html">Register</a>
+    <a href="login.html">Login</a>
+
+</div>
+          
+<div class="container">
+        <div class="content">
+            <h2>About us:</h2> <br>
+        <p>MedMatch is a comprehensive healthcare platform designed to bridge the gap between patients, medicines, and pharmacies. The system provides a robust solution for searching medicines, checking drug-to-drug interactions, locating nearby pharmacies via interactive maps, and managing digital prescriptions. It ensures patient safety by identifying potentially harmful interactions and providing reliable information about medication availability.</p>
+        <p>
+MedMatch is a smart healthcare platform that helps patients search for medicines, locate nearby pharmacies, and manage digital prescriptions. The system provides accurate medicine information and makes it easier for users to access healthcare services through a simple and user-friendly interface.
+</p>
+
+<p>
+One of the key features of MedMatch is its drug interaction checker. Users can select multiple medicines, and the system analyzes whether they have any harmful interactions. This feature improves patient safety by helping users make informed decisions before taking medications together.
+</p>
+
+<p>
+The platform also includes a pharmacy locator that displays nearby pharmacies on an interactive map. Users can quickly find pharmacies, view their locations, and check medicine availability, reducing the time spent searching for essential medicines.
+</p>
+
+
+</div>
+<div class="image">
+    <img src="https://indoreinstitute.com/wp-content/uploads/2020/05/Young-female-pharmacist-working-in-a-pharmacy.jpg"></img>
+</div>
+</div>
+<br>
+<hr>
+
+<section class="features">
+    <h2>Our Features</h2>
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>💊 Medicine Search</h3>
+            <p>Search medicines instantly and get detailed information including dosage, manufacturer, strength, and usage.</p>
+        </div>
+
+        <div class="card">
+            <h3>⚠ Drug Interaction Checker</h3>
+            <p>Check whether two or more medicines can be safely taken together and receive interaction warnings.</p>
+        </div>
+
+        <div class="card">
+            <h3>📍 Pharmacy Locator</h3>
+            <p>Locate nearby pharmacies using an interactive map and check medicine availability.</p>
+        </div>
+
+        <div class="card">
+            <h3>📄 Digital Prescription</h3>
+            <p>Store prescriptions digitally and access them anytime without carrying paper copies.</p>
+        </div>
+
+    </div>
+</section><br>
+<hr>
+
+<section class="work">
+
+<h2>How MedMatch Works</h2>
+
+<div class="process">
+
+<div class="step left">
+    <div class="number">1</div>
+    <div class="text">
+        <h3>Create Account</h3>
+        <p>Create your MedMatch account to access all healthcare services.</p>
+    </div>
+</div>
+
+<div class="step right">
+    <div class="number">2</div>
+    <div class="text">
+        <h3>Login Securely</h3>
+        <p>Login using your registered email and password.</p>
+    </div>
+</div>
+
+<div class="step left">
+    <div class="number">3</div>
+    <div class="text">
+        <h3>Search Medicines</h3>
+        <p>Search medicines and view dosage, usage and manufacturer details.</p>
+    </div>
+</div>
+
+<div class="step right">
+    <div class="number">4</div>
+    <div class="text">
+        <h3>Check Drug Interactions</h3>
+        <p>Analyze medicines to identify harmful drug interactions.</p>
+    </div>
+</div>
+
+<div class="step left">
+    <div class="number">5</div>
+    <div class="text">
+        <h3>Locate Nearby Pharmacy</h3>
+        <p>Find pharmacies near your location and check medicine availability.</p>
+    </div>
+</div>
+
+<div class="step right">
+    <div class="number">6</div>
+    <div class="text">
+        <h3>Manage Prescriptions</h3>
+        <p>Upload and access your prescriptions digitally anytime.</p>
+    </div>
+</div>
+
+</div>
+
+</section>
+
+<hr>
+
+<section>
+
+<h2>Why Choose MedMatch?</h2>
+
+<div class="benefits">
+
+<div class="benefit">
+<h3>Reliable</h3>
+<p>Provides trusted medicine information from verified sources.</p>
+</div>
+
+<div class="benefit">
+<h3>Fast</h3>
+<p>Quickly search medicines and nearby pharmacies in seconds.</p>
+</div>
+
+<div class="benefit">
+<h3>Safe</h3>
+<p>Drug interaction checker helps patients avoid harmful medicine combinations.</p>
+</div>
+
+<div class="benefit">
+<h3>User Friendly</h3>
+<p>Simple interface that anyone can use easily.</p>
+</div>
+
+</div>
+
+</section>
+
+<hr>
+
+<section>
+
+<h2>MedMatch in Numbers</h2>
+
+<div class="stats">
+
+<div class="stat">
+<h1>5000+</h1>
+<p>Medicines</p>
+</div>
+
+<div class="stat">
+<h1>150+</h1>
+<p>Pharmacies</p>
+</div>
+
+<div class="stat">
+<h1>1000+</h1>
+<p>Users</p>
+</div>
+
+<div class="stat">
+<h1>24/7</h1>
+<p>Availability</p>
+</div>
+
+</div>
+
+</section>
+
+<hr>
+
+<section>
+
+<h2>Testimonials</h2>
+
+<div class="testimonials">
+
+<div class="review">
+<p>"MedMatch helped me find the nearest pharmacy within minutes. Amazing experience!"</p>
+<h4>- Arun Kumar</h4>
+</div>
+
+<div class="review">
+<p>"The drug interaction checker is very useful. It gives confidence before taking medicines."</p>
+<h4>- Priya S</h4>
+</div>
+
+<div class="review">
+<p>"Very simple interface and easy to use. Highly recommended."</p>
+<h4>- Naveen R</h4>
+</div>
+
+</div>
+
+</section>
+
+<hr>
+
+<section class="faq">
+
+<h2>Frequently Asked Questions</h2>
+
+<details>
+<summary>Is MedMatch free?</summary>
+<p>Yes. MedMatch can be used free for searching medicines and locating pharmacies.</p>
+</details>
+
+<details>
+<summary>Can I check multiple medicines?</summary>
+<p>Yes. You can compare multiple medicines for possible drug interactions.</p>
+</details>
+
+<details>
+<summary>Can I upload prescriptions?</summary>
+<p>Yes. Digital prescriptions can be stored securely.</p>
+</details>
+
+<details>
+<summary>Does MedMatch show nearby pharmacies?</summary>
+<p>Yes. It uses location services to display nearby pharmacies.</p>
+</details>
+
+</section>
+
+<hr>
+
+<section class="contact">
+
+<h2>Contact Us</h2>
+
+<p><strong>Email:</strong> support@medmatch.com</p>
+
+<p><strong>Phone:</strong> +91 9876543210</p>
+
+<p><strong>Address:</strong> Coimbatore, Tamil Nadu, India</p>
+
+<p>Thank you for choosing MedMatch. Together, let's make healthcare safer and more accessible.</p>
+
+</section>
+
+<footer>
+
+<div class="footer">
+
+<div class="footer-column">
+
+<h2>💊 MedMatch</h2>
+
+<p>
+MedMatch helps users search medicines, check drug interactions,
+find nearby pharmacies and manage prescriptions digitally.
+</p>
+
+</div>
+
+<div class="footer-column">
+
+<h3>Quick Links</h3>
+
+<a href="index.html">Home</a>
+<a href="register.html">Register</a>
+<a href="login.html">Login</a>
+
+</div>
+
+<div class="footer-column">
+
+<h3>Services</h3>
+
+<p>Medicine Search</p>
+<p>Drug Interaction Checker</p>
+<p>Pharmacy Locator</p>
+<p>Digital Prescription</p>
+
+</div>
+
+<div class="footer-column">
+
+<h3>Contact</h3>
+
+<p>📍 Coimbatore, Tamil Nadu</p>
+<p>📧 support@medmatch.com</p>
+<p>📞 +91 9876543210</p>
+
+</div>
+
+</div>
+
+<hr>
+
+<div class="footer-bottom">
+
+<p>© 2026 MedMatch. All Rights Reserved.</p>
+
+<p>Designed with ❤ for Better Healthcare.</p>
+
+</div>
+
+</footer>
+
+    </body>
+</html>

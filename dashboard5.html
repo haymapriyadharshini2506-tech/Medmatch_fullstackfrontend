@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interaction Dashboard</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f5f5f5;
+}
+
+.head{
+    background:rgb(137, 178, 209);
+    color:rgb(26, 26, 123);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px;
+}
+
+.head h2{
+    color:rgb(26, 26, 123);
+    margin:0;
+    font-size:26px;
+}
+
+.head-right{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+.backbt{
+    padding:10px 16px;
+    background:white;
+    color:rgb(26, 26, 123);
+    border:2px solid rgb(26, 26, 123);
+    cursor:pointer;
+    border-radius:5px;
+    font-weight:bold;
+    text-decoration:none;
+    font-size:14px;
+}
+
+.logoutbt{
+    padding:10px 16px;
+    background:rgb(26, 26, 123);
+    color:white;
+    border:none;
+    cursor:pointer;
+    border-radius:5px;
+    font-weight:bold;
+    font-size:14px;
+}
+
+.logoutbt:hover{
+    background:rgb(13, 13, 85);
+}
+
+.operations{
+    width:90%;
+    margin:20px auto;
+    background:white;
+    padding:20px;
+    border-radius:8px;
+}
+
+.bt {
+    padding: 12px 20px;
+    margin: 5px;
+    background: white;
+    color: rgb(26, 26, 123);
+    border: 2px solid rgb(137, 178, 209);
+    cursor: pointer;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.bt:hover {
+    background: rgb(26, 26, 123);
+    color: white;
+    border-color: rgb(26, 26, 123);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(26, 26, 123, 0.15);
+}
+
+.bt:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(26, 26, 123, 0.05);
+}
+
+.section{
+    display:none;
+    margin-top:20px;
+}
+
+.section input{
+    width:320px;
+    padding: 10px 14px;
+    margin: 8px 5px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.section input:focus {
+    border-color: rgb(26, 26, 123);
+    box-shadow: 0 0 0 3px rgba(26, 26, 123, 0.15);
+}
+
+.actionBtn {
+    padding: 12px 24px;
+    background: #10b981;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.25);
+    margin-top: 10px;
+}
+
+.actionBtn:hover {
+    background: #059669;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(16, 185, 129, 0.4);
+}
+
+.actionBtn:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.25);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+table,th,td{
+    border:1px solid gray;
+}
+
+th,td{
+    padding:10px;
+    text-align:left;
+}
+
+#message{
+    margin-top:20px;
+    font-weight:bold;
+    color:green;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="head">
+    <h2>&#x26A0;&#xFE0F; Interaction Dashboard</h2>
+    <div class="head-right">
+        <a class="backbt" href="dashboards.html">&#8592; Back</a>
+        <button class="logoutbt" onclick="logout()">Logout</button>
+    </div>
+</div>
+
+<div class="operations">
+
+<h2>Interaction Operations</h2>
+
+<button class="bt" onclick="showSection('add')">Add Interaction</button>
+<button class="bt" onclick="showSection('get')">Get Interaction By ID</button>
+<button class="bt" onclick="showSection('getall')">Get Interactions</button>
+<button class="bt" onclick="showSection('edit')">Edit Interaction</button>
+<button class="bt" onclick="showSection('delete')">Delete Interaction</button>
+
+<!-- Add Interaction -->
+
+<div id="add" class="section">
+
+<h3>Add Interaction</h3>
+
+<input type="text" id="medicineone" placeholder="Medicine One"><br>
+<input type="text" id="medicinetwo" placeholder="Medicine Two"><br>
+<input type="text" id="severity" placeholder="Severity"><br>
+<input type="text" id="warningmessage" placeholder="Warning Message"><br>
+
+<button class="actionBtn" onclick="addInteraction()">Add Interaction</button>
+
+</div>
+
+<!-- Get Interaction -->
+
+<div id="get" class="section">
+
+<h3>Get Interaction By ID</h3>
+
+<input type="number" id="getInteractionId" placeholder="Interaction ID"><br>
+
+<button class="actionBtn" onclick="getInteractionById()">Get Interaction</button>
+
+<br><br>
+
+<div id="interactionDetails"></div>
+
+</div>
+
+<!-- Get All Interactions -->
+
+<div id="getall" class="section">
+
+<h3>Interactions</h3>
+
+<table>
+
+<thead>
+
+<tr>
+<th>ID</th>
+<th>Medicine One</th>
+<th>Medicine Two</th>
+<th>Severity</th>
+<th>Warning Message</th>
+</tr>
+
+</thead>
+
+<tbody id="interactionBody">
+
+</tbody>
+
+</table>
+
+</div>
+
+<!-- Edit Interaction -->
+
+<div id="edit" class="section">
+
+<h3>Edit Interaction</h3>
+
+<input type="number" id="editId" placeholder="Interaction ID"><br>
+<input type="text" id="editMedicineone" placeholder="New Medicine One"><br>
+<input type="text" id="editMedicinetwo" placeholder="New Medicine Two"><br>
+<input type="text" id="editSeverity" placeholder="New Severity"><br>
+<input type="text" id="editWarningmessage" placeholder="New Warning Message"><br>
+
+<button class="actionBtn" onclick="editInteraction()">Update Interaction</button>
+
+</div>
+
+<!-- Delete Interaction -->
+
+<div id="delete" class="section">
+
+<h3>Delete Interaction</h3>
+
+<input type="number" id="deleteId" placeholder="Interaction ID"><br>
+
+<button class="actionBtn" onclick="deleteInteraction()">Delete Interaction</button>
+
+</div>
+
+<h3 id="message"></h3>
+
+<script>
+
+const BASEURL="https://medmatch-fullstackbackend.onrender.com";
+const token=localStorage.getItem("token");
+
+function showSection(id){
+
+document.getElementById("message").innerHTML="";
+document.getElementById("interactionDetails").innerHTML="";
+document.getElementById("interactionBody").innerHTML="";
+
+document.getElementById("add").style.display="none";
+document.getElementById("get").style.display="none";
+document.getElementById("getall").style.display="none";
+document.getElementById("edit").style.display="none";
+document.getElementById("delete").style.display="none";
+
+document.getElementById(id).style.display="block";
+
+if(id=="getall"){
+getAllInteractions();
+}
+
+}
+
+function logout(){
+
+localStorage.clear();
+window.location.href="index.html";
+
+}
+
+async function addInteraction(){
+
+    let medicineone=document.getElementById("medicineone").value;
+    let medicinetwo=document.getElementById("medicinetwo").value;
+    let severity=document.getElementById("severity").value;
+    let warningmessage=document.getElementById("warningmessage").value;
+
+    if(medicineone==="" || medicinetwo==="" || severity==="" || warningmessage===""){
+        alert("Please fill in all fields");
+        return;
+    }
+
+    try{
+
+        const response=await fetch(BASEURL+"/postint",{
+
+            method:"POST",
+
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization":"Bearer "+token
+            },
+
+            body:JSON.stringify({
+                medicineone:medicineone,
+                medicinetwo:medicinetwo,
+                severity:severity,
+                warningmessage:warningmessage
+            })
+
+        });
+
+        if(response.ok){
+
+            document.getElementById("message").style.color="green";
+            document.getElementById("message").innerHTML="Interaction Added Successfully";
+
+            document.getElementById("medicineone").value="";
+            document.getElementById("medicinetwo").value="";
+            document.getElementById("severity").value="";
+            document.getElementById("warningmessage").value="";
+
+        }else{
+
+            document.getElementById("message").style.color="red";
+            document.getElementById("message").innerHTML="Failed to Add Interaction";
+
+        }
+
+    }catch(error){
+
+        document.getElementById("message").style.color="red";
+        document.getElementById("message").innerHTML="Server Error";
+
+    }
+
+}
+
+async function getAllInteractions(){
+
+    try{
+
+        const response=await fetch(BASEURL+"/getint",{
+
+            method:"GET",
+
+            headers:{
+                "Authorization":"Bearer "+token
+            }
+
+        });
+
+        if(response.ok){
+
+            const interactions=await response.json();
+
+            let rows="";
+
+            interactions.forEach(int=>{
+
+                rows+=`
+                <tr>
+                    <td>${int.id}</td>
+                    <td>${int.medicineone}</td>
+                    <td>${int.medicinetwo}</td>
+                    <td>${int.severity}</td>
+                    <td>${int.warningmessage}</td>
+                </tr>`;
+
+            });
+
+            document.getElementById("interactionBody").innerHTML=rows;
+
+        }else{
+
+            document.getElementById("message").style.color="red";
+            document.getElementById("message").innerHTML="Failed to Fetch Interactions";
+
+        }
+
+    }catch(error){
+
+        document.getElementById("message").style.color="red";
+        document.getElementById("message").innerHTML="Server Error";
+
+    }
+
+}
+
+async function getInteractionById(){
+
+    let id=document.getElementById("getInteractionId").value;
+
+    if(id===""){
+        alert("Enter Interaction ID");
+        return;
+    }
+
+    try{
+
+        // Note: mapped to /get/{id} in controller
+        const response=await fetch(BASEURL+"/get/"+id,{
+
+            method:"GET",
+
+            headers:{
+                "Authorization":"Bearer "+token
+            }
+
+        });
+
+        if(response.ok){
+
+            const int=await response.json();
+
+            document.getElementById("interactionDetails").innerHTML=`
+                <p><b>ID:</b> ${int.id}</p>
+                <p><b>Medicine One:</b> ${int.medicineone}</p>
+                <p><b>Medicine Two:</b> ${int.medicinetwo}</p>
+                <p><b>Severity:</b> ${int.severity}</p>
+                <p><b>Warning Message:</b> ${int.warningmessage}</p>
+            `;
+
+        }else{
+
+            document.getElementById("interactionDetails").innerHTML="Interaction Not Found";
+
+        }
+
+    }catch(error){
+
+        document.getElementById("interactionDetails").innerHTML="Server Error";
+
+    }
+
+}
+
+async function editInteraction(){
+
+    let id=document.getElementById("editId").value;
+    let medicineone=document.getElementById("editMedicineone").value;
+    let medicinetwo=document.getElementById("editMedicinetwo").value;
+    let severity=document.getElementById("editSeverity").value;
+    let warningmessage=document.getElementById("editWarningmessage").value;
+
+    if(id===""){
+        alert("Enter Interaction ID");
+        return;
+    }
+
+    try{
+
+        const response=await fetch(BASEURL+"/putint/"+id,{
+
+            method:"PUT",
+
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization":"Bearer "+token
+            },
+
+            body:JSON.stringify({
+                medicineone:medicineone,
+                medicinetwo:medicinetwo,
+                severity:severity,
+                warningmessage:warningmessage
+            })
+
+        });
+
+        if(response.ok){
+
+            document.getElementById("message").style.color="green";
+            document.getElementById("message").innerHTML="Interaction Updated Successfully";
+
+            document.getElementById("editId").value="";
+            document.getElementById("editMedicineone").value="";
+            document.getElementById("editMedicinetwo").value="";
+            document.getElementById("editSeverity").value="";
+            document.getElementById("editWarningmessage").value="";
+
+        }else{
+
+            document.getElementById("message").style.color="red";
+            document.getElementById("message").innerHTML="Failed to Update Interaction";
+
+        }
+
+    }catch(error){
+
+        document.getElementById("message").style.color="red";
+        document.getElementById("message").innerHTML="Server Error";
+
+    }
+
+}
+
+async function deleteInteraction(){
+
+    let id=document.getElementById("deleteId").value;
+
+    if(id===""){
+        alert("Enter Interaction ID");
+        return;
+    }
+
+    try{
+
+        const response=await fetch(BASEURL+"/deleteint/"+id,{
+
+            method:"DELETE",
+
+            headers:{
+                "Authorization":"Bearer "+token
+            }
+
+        });
+
+        if(response.ok){
+
+            document.getElementById("message").style.color="green";
+            document.getElementById("message").innerHTML="Interaction Deleted Successfully";
+
+            document.getElementById("deleteId").value="";
+
+        }else{
+
+            document.getElementById("message").style.color="red";
+            document.getElementById("message").innerHTML="Failed to Delete Interaction";
+
+        }
+
+    }catch(error){
+
+        document.getElementById("message").style.color="red";
+        document.getElementById("message").innerHTML="Server Error";
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>

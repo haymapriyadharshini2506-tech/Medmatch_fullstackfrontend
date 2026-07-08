@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medicine Dashboard</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f5f5;
+}
+
+.head{
+    background:rgb(137, 178, 209);
+    color:rgb(26, 26, 123);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px;
+}
+
+.head h2{
+    color:rgb(26, 26, 123);
+    margin:0;
+    font-size:26px;
+}
+
+.head-right{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+.backbt{
+    padding:10px 16px;
+    background:white;
+    color:rgb(26, 26, 123);
+    border:2px solid rgb(26, 26, 123);
+    cursor:pointer;
+    border-radius:5px;
+    font-weight:bold;
+    text-decoration:none;
+    font-size:14px;
+}
+
+.logoutbt{
+    padding:10px 16px;
+    background:rgb(26, 26, 123);
+    color:white;
+    border:none;
+    cursor:pointer;
+    border-radius:5px;
+    font-weight:bold;
+    font-size:14px;
+}
+
+.logoutbt:hover{
+    background:rgb(13, 13, 85);
+}
+
+.operations{
+    width:90%;
+    margin:20px auto;
+    background:white;
+    padding:20px;
+}
+
+.bt {
+    padding: 12px 20px;
+    margin: 5px;
+    background: white;
+    color: rgb(26, 26, 123);
+    border: 2px solid rgb(137, 178, 209);
+    cursor: pointer;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.bt:hover {
+    background: rgb(26, 26, 123);
+    color: white;
+    border-color: rgb(26, 26, 123);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(26, 26, 123, 0.15);
+}
+
+.bt:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(26, 26, 123, 0.05);
+}
+
+.section{
+    display:none;
+    margin-top:20px;
+}
+
+.section input{
+    width:320px;
+    padding: 10px 14px;
+    margin: 8px 5px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.section input:focus {
+    border-color: rgb(26, 26, 123);
+    box-shadow: 0 0 0 3px rgba(26, 26, 123, 0.15);
+}
+
+.actionBtn {
+    padding: 12px 24px;
+    background: #10b981;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.25);
+    margin-top: 10px;
+}
+
+.actionBtn:hover {
+    background: #059669;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(16, 185, 129, 0.4);
+}
+
+.actionBtn:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.25);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+table,th,td{
+    border:1px solid gray;
+}
+
+th,td{
+    padding:10px;
+    text-align:left;
+}
+
+#message{
+    margin-top:20px;
+    font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="head">
+<h2>&#x1F48A; Medicine Dashboard</h2>
+<div class="head-right">
+    <a class="backbt" href="dashboards.html">&#8592; Back</a>
+    <button class="logoutbt" onclick="logout()">Logout</button>
+</div>
+</div>
+
+<div class="operations">
+
+<h2>Medicine Operations</h2>
+
+<button class="bt" onclick="showSection('add')">Add Medicine</button>
+
+<button class="bt" onclick="showSection('get')">Get Medicine By ID</button>
+
+<button class="bt" onclick="showSection('getall')">Get Medicines</button>
+
+<button class="bt" onclick="showSection('edit')">Edit Medicine</button>
+
+<button class="bt" onclick="showSection('delete')">Delete Medicine</button>
+
+<!-- Add Medicine -->
+
+<div id="add" class="section">
+
+<h3>Add Medicine</h3>
+
+<input type="text" id="name" placeholder="Medicine Name"><br>
+
+<input type="text" id="genericname" placeholder="Generic Name"><br>
+
+<input type="text" id="manufacturer" placeholder="Manufacturer"><br>
+
+<input type="text" id="dosageform" placeholder="Dosage Form"><br>
+
+<input type="text" id="strength" placeholder="Strength"><br>
+
+<input type="text" id="description" placeholder="Description"><br>
+
+<input type="text" id="category" placeholder="Category"><br>
+
+<input type="text" id="instock" placeholder="true / false"><br>
+
+<button class="actionBtn" onclick="addMedicine()">
+Add Medicine
+</button>
+
+</div>
+
+<!-- Get Medicine -->
+
+<div id="get" class="section">
+
+<h3>Get Medicine By ID</h3>
+
+<input type="number" id="getMedicineId" placeholder="Medicine ID"><br>
+
+<button class="actionBtn" onclick="getMedicineById()">
+Get Medicine
+</button>
+
+<br><br>
+
+<div id="medicineDetails"></div>
+
+</div>
+
+<!-- Get All Medicines -->
+
+<div id="getall" class="section">
+
+<h3>Medicines</h3>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+<th>Name</th>
+<th>Generic Name</th>
+<th>Manufacturer</th>
+<th>Dosage Form</th>
+<th>Strength</th>
+<th>Description</th>
+<th>Category</th>
+<th>In Stock</th>
+
+</tr>
+
+</thead>
+
+<tbody id="medicineBody">
+
+</tbody>
+
+</table>
+
+</div>
+
+<!-- Edit Medicine -->
+
+<div id="edit" class="section">
+
+<h3>Edit Medicine</h3>
+
+<input type="number" id="editId" placeholder="Medicine ID"><br>
+
+<input type="text" id="editName" placeholder="Medicine Name"><br>
+
+<input type="text" id="editGenericname" placeholder="Generic Name"><br>
+
+<input type="text" id="editManufacturer" placeholder="Manufacturer"><br>
+
+<input type="text" id="editDosageform" placeholder="Dosage Form"><br>
+
+<input type="text" id="editStrength" placeholder="Strength"><br>
+
+<input type="text" id="editDescription" placeholder="Description"><br>
+
+<input type="text" id="editCategory" placeholder="Category"><br>
+
+<input type="text" id="editInstock" placeholder="true / false"><br>
+
+<button class="actionBtn" onclick="editMedicine()">
+Update Medicine
+</button>
+
+</div>
+
+<!-- Delete Medicine -->
+
+<div id="delete" class="section">
+
+<h3>Delete Medicine</h3>
+
+<input type="number" id="deleteId" placeholder="Medicine ID"><br>
+
+<button class="actionBtn" onclick="deleteMedicine()">
+Delete Medicine
+</button>
+
+</div>
+
+<h3 id="message"></h3>
+
+<script>
+
+const BASEURL="https://medmatch-fullstackbackend.onrender.com";
+const token=localStorage.getItem("token");
+
+function showSection(id){
+
+document.getElementById("message").innerHTML="";
+document.getElementById("medicineDetails").innerHTML="";
+document.getElementById("medicineBody").innerHTML="";
+
+document.getElementById("add").style.display="none";
+document.getElementById("get").style.display="none";
+document.getElementById("getall").style.display="none";
+document.getElementById("edit").style.display="none";
+document.getElementById("delete").style.display="none";
+
+document.getElementById(id).style.display="block";
+
+if(id=="getall"){
+getAllMedicines();
+}
+
+}
+
+function logout(){
+
+localStorage.clear();
+window.location.href="index.html";
+
+}
+async function addMedicine(){
+
+    let name=document.getElementById("name").value;
+    let genericname=document.getElementById("genericname").value;
+    let manufacturer=document.getElementById("manufacturer").value;
+    let dosageform=document.getElementById("dosageform").value;
+    let strength=document.getElementById("strength").value;
+    let description=document.getElementById("description").value;
+    let category=document.getElementById("category").value;
+    let instock=document.getElementById("instock").value==="true";
+
+    if(name===""){
+
+        alert("Enter Medicine Name");
+        return;
+
+    }
+
+    try{
+
+        const response=await fetch(BASEURL+"/postmed",{
+
+            method:"POST",
+
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization":"Bearer "+token
+            },
+
+            body:JSON.stringify({
+
+                name:name,
+                genericname:genericname,
+                manufacturer:manufacturer,
+                dosageform:dosageform,
+                strength:strength,
+                description:description,
+                category:category,
+                inStock:instock
+
+            })
+
+        });
+
+        if(response.ok){
+
+            document.getElementById("message").style.color="green";
+            document.getElementById("message").innerHTML="Medicine Added Successfully";
+
+            document.getElementById("name").value="";
+            document.getElementById("genericname").value="";
+            document.getElementById("manufacturer").value="";
+            document.getElementById("dosageform").value="";
+            document.getElementById("strength").value="";
+            document.getElementById("description").value="";
+            document.getElementById("category").value="";
+            document.getElementById("instock").value="";
+
+        }
+        else{
+
+            document.getElementById("message").style.color="red";
+            document.getElementById("message").innerHTML="Failed to Add Medicine";
+
+        }
+
+    }
+    catch(error){
+
+        document.getElementById("message").style.color="red";
+        document.getElementById("message").innerHTML="Server Error";
+
+    }
+
+}
+
+async function getMedicineById(){
+
+    let id=document.getElementById("getMedicineId").value;
+
+    if(id===""){
+
+        alert("Enter Medicine ID");
+        return;
+
+    }
+
+    try{
+
+        const response=await fetch(BASEURL+"/getmed/"+id,{
+
+            method:"GET",
+
+            headers:{
+                "Authorization":"Bearer "+token
+            }
+
+        });
+
+        if(response.ok){
+
+            const medicine=await response.json();
+
+            document.getElementById("medicineDetails").innerHTML=`
+
+            <p><b>ID :</b> ${medicine.id}</p>
+
+            <p><b>Name :</b> ${medicine.name}</p>
+
+            <p><b>Generic Name :</b> ${medicine.genericname}</p>
+
+            <p><b>Manufacturer :</b> ${medicine.manufacturer}</p>
+
+            <p><b>Dosage Form :</b> ${medicine.dosageform}</p>
+
+            <p><b>Strength :</b> ${medicine.strength}</p>
+
+            <p><b>Description :</b> ${medicine.description}</p>
+
+            <p><b>Category :</b> ${medicine.category}</p>
+
+            <p><b>In Stock :</b> ${medicine.inStock}</p>
+
+            `;
+
+        }
+        else{
+
+            document.getElementById("medicineDetails").innerHTML="Medicine Not Found";
+
+        }
+
+    }
+    catch(error){
+
+        document.getElementById("medicineDetails").innerHTML="Server Error";
+
+    }
+
+}
+async function getAllMedicines(){
+
+    try{
+
+        const response=await fetch(BASEURL+"/getmed",{
+
+            method:"GET",
+
+            headers:{
+                "Authorization":"Bearer "+token
+            }
+
+        });
+
+        if(response.ok){
+
+            const medicines=await response.json();
+
+            let rows="";
+
+            medicines.forEach(medicine=>{
+
+                rows+=`
+                <tr>
+
+                    <td>${medicine.id}</td>
+                    <td>${medicine.name}</td>
+                    <td>${medicine.genericname}</td>
+                    <td>${medicine.manufacturer}</td>
+                    <td>${medicine.dosageform}</td>
+                    <td>${medicine.strength}</td>
+                    <td>${medicine.description}</td>
+                    <td>${medicine.category}</td>
+                    <td>${medicine.inStock}</td>
+
+                </tr>
+                `;
+
+            });
+
+            document.getElementById("medicineBody").innerHTML=rows;
+
+        }
+        else{
+
+            document.getElementById("message").style.color="red";
+            document.getElementById("message").innerHTML="Failed to Fetch Medicines";
+
+        }
+
+    }
+    catch(error){
+
+        document.getElementById("message").style.color="red";
+        document.getElementById("message").innerHTML="Server Error";
+
+    }
+
+}
+
+async function editMedicine(){
+
+    let id=document.getElementById("editId").value;
+    let name=document.getElementById("editName").value;
+    let genericname=document.getElementById("editGenericname").value;
+    let manufacturer=document.getElementById("editManufacturer").value;
+    let dosageform=document.getElementById("editDosageform").value;
+    let strength=document.getElementById("editStrength").value;
+    let description=document.getElementById("editDescription").value;
+    let category=document.getElementById("editCategory").value;
+    let instock=document.getElementById("editInstock").value==="true";
+
+    if(id===""){
+
+        alert("Enter Medicine ID");
+        return;
+
+    }
+
+    try{
+
+        const response=await fetch(BASEURL+"/putmed/"+id,{
+
+            method:"PUT",
+
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization":"Bearer "+token
+            },
+
+            body:JSON.stringify({
+
+                name:name,
+                genericname:genericname,
+                manufacturer:manufacturer,
+                dosageform:dosageform,
+                strength:strength,
+                description:description,
+                category:category,
+                inStock:instock
+
+            })
+
+        });
+
+        if(response.ok){
+
+            document.getElementById("message").style.color="green";
+            document.getElementById("message").innerHTML="Medicine Updated Successfully";
+
+            document.getElementById("editId").value="";
+            document.getElementById("editName").value="";
+            document.getElementById("editGenericname").value="";
+            document.getElementById("editManufacturer").value="";
+            document.getElementById("editDosageform").value="";
+            document.getElementById("editStrength").value="";
+            document.getElementById("editDescription").value="";
+            document.getElementById("editCategory").value="";
+            document.getElementById("editInstock").value="";
+
+        }
+        else{
+
+            document.getElementById("message").style.color="red";
+            document.getElementById("message").innerHTML="Failed to Update Medicine";
+
+        }
+
+    }
+    catch(error){
+
+        document.getElementById("message").style.color="red";
+        document.getElementById("message").innerHTML="Server Error";
+
+    }
+
+}
+async function deleteMedicine(){
+
+    let id=document.getElementById("deleteId").value;
+
+    if(id===""){
+
+        alert("Enter Medicine ID");
+        return;
+
+    }
+
+    try{
+
+        const response=await fetch(BASEURL+"/deletemed/"+id,{
+
+            method:"DELETE",
+
+            headers:{
+                "Authorization":"Bearer "+token
+            }
+
+        });
+
+        if(response.ok){
+
+            document.getElementById("message").style.color="green";
+            document.getElementById("message").innerHTML="Medicine Deleted Successfully";
+
+            document.getElementById("deleteId").value="";
+
+        }
+        else{
+
+            document.getElementById("message").style.color="red";
+            document.getElementById("message").innerHTML="Failed to Delete Medicine";
+
+        }
+
+    }
+    catch(error){
+
+        document.getElementById("message").style.color="red";
+        document.getElementById("message").innerHTML="Server Error";
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
